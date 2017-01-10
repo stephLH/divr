@@ -5,7 +5,8 @@
 \title{Extraire les fichiers des archives zip d'un repertoire (recursif)}
 \usage{
 extraire_masse_zip(chemin, regex_fichier, repertoire_sortie = ".",
-  vider_repertoire_sortie = TRUE, return_tibble = TRUE)
+  vider_repertoire_sortie = TRUE, return_tibble = TRUE,
+  paralleliser = TRUE)
 }
 \arguments{
 \item{chemin}{Répertoire dans lequel sont cherchés (récursif) les archives zip dont le contenu est extrait.}
