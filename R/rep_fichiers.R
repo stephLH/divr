@@ -145,7 +145,7 @@ extraire_fichiers_zip <- function(archive_zip, regex_fichier = NULL, repertoire_
 #' @export
 extraire_masse_zip <- function(chemin, regex_fichier, repertoire_sortie = ".", vider_repertoire_sortie = TRUE, return_tibble = TRUE) {
 
-  clusters <- divr::initialiser_parallel()
+  clusters <- divr::initialiser_cluster()
 
   if (vider_repertoire_sortie == TRUE) {
     vider_repertoire(repertoire_sortie)
@@ -164,7 +164,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, repertoire_sortie = ".", v
   pbapply::pblapply(archives_zip$archive_zip, extraire_fichiers_zip, regex_fichier = regex_fichier, repertoire_sortie = repertoire_sortie, cl = clusters) %>%
     invisible()
 
-  parallel::stopCluster(clusters)
+  divr::stopper_cluster(clusters)
 
   archives_zip <- dplyr::mutate(archives_zip, fichier = paste0(repertoire_sortie, "/", fichier))
 
