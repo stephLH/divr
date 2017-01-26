@@ -4,28 +4,33 @@
 #'
 #' @param date_debut Date de début de la période
 #' @param date_fin Date de fin de la période
+#' @param methode Méthode de calcul:\cr
+#' arrondi: Un arrondi au plus proche selon le nombre de jours (méthode par défaut).\cr
+#' max: Un seul jour dans un mois suffit à le comptabiliser.
 #'
 #' @return Le nombre de mois écoulés entre les deux dates.\cr
-#' Un seul jour dans un mois suffit à le comptabiliser.
 #'
 #' @examples
 #' # Une année écoulée au jour près
-#' divr::mois_ecoules("2000-01-01", "2001-01-01")
+#' divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("01/01/2001"))
 #'
 #' # Une année écoulée moins un jour
-#' divr::mois_ecoules("2000-01-01", "2000-12-31")
+#' divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("31/12/2000"))
 #'
 #' @export
-mois_ecoules <- function(date_debut, date_fin) {
+mois_ecoules <- function(date_debut, date_fin, methode = "arrondi") {
 
-  date_fin <- as.POSIXlt(date_fin)
-  date_debut <- as.POSIXlt(date_debut)
-
-  mois_ecoules <- 12 * (date_fin$year - date_debut$year) + (date_fin$mon - date_debut$mon) + 1
+  if (methode == "max") {
+    mois_ecoules <- 12 * (lubridate::year(date_fin) - lubridate::year(date_debut)) + (lubridate::month(date_fin) - lubridate::month(date_debut)) + 1
+  } else if (methode == "arrondi") {
+    jour_ecoules <- date_fin - date_debut
+    jour_ecoules <- lubridate::days(jour_ecoules)
+    mois_ecoules <- jour_ecoules$day / 30
+    mois_ecoules <- round(mois_ecoules)
+  }
 
   return(mois_ecoules)
 }
-
 #' Obtenir la date du jour (format yyyy_mm_jj) pour prefixer un fichier
 #'
 #' Obtenir la date du jour (format yyyy_mm_jj) pour préfixer un fichier.

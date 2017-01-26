@@ -4,26 +4,29 @@
 \alias{mois_ecoules}
 \title{Obtenir le nombre de mois ecoules entre deux dates}
 \usage{
-mois_ecoules(date_debut, date_fin)
+mois_ecoules(date_debut, date_fin, methode = "arrondi")
 }
 \arguments{
 \item{date_debut}{Date de début de la période}
 
 \item{date_fin}{Date de fin de la période}
+
+\item{methode}{Méthode de calcul:\cr
+arrondi: Un arrondi au plus proche selon le nombre de jours (méthode par défaut).\cr
+max: Un seul jour dans un mois suffit à le comptabiliser.}
 }
 \value{
 Le nombre de mois écoulés entre les deux dates.\cr
-Un seul jour dans un mois suffit à le comptabiliser.
 }
 \description{
 Obtenir le nombre de mois écoulés entre deux dates.
 }
 \examples{
 # Une année écoulée au jour près
-divr::mois_ecoules("2000-01-01", "2001-01-01")
+divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("01/01/2001"))
 
 # Une année écoulée moins un jour
-divr::mois_ecoules("2000-01-01", "2000-12-31")
+divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("31/12/2000"))
 
 }
 
