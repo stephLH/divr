@@ -1,7 +1,7 @@
 Package: divr
 Title: Fonctions diverses utiles partout
 Version: 0.1
-Authors@R: person("SIES", "Departement des outils d'aide a la decision", email = "ce.siesc3@education.gouv.fr", role = c("aut", "cre"))
+Authors@R: person("Stéphane Le Hénanff", "Stéphane Le Hénanff", email = "github@le-henanff.fr", role = c("aut", "cre"))
 Description: Fonctions diverses utiles partout.
 Depends:
     R (>= 3.2.5)
