@@ -11,5 +11,9 @@ LazyData: true
 Imports:
   	dplyr,
     stringr,
-    purrr
+    lubridate,
+    purrr,
+    doParallel,
+    parallel,
+    pbapply
 RoxygenNote: 5.0.1
