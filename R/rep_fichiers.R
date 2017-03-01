@@ -69,7 +69,7 @@ extension_fichier <- function(fichier) {
     stop("Le paramètre doit être de type character", call. = FALSE)
   }
 
-  extension_fichier <- stringr::str_match(fichier, "\\.([^\\.]+)$")[,2]
+  extension_fichier <- stringr::str_match(fichier, "\\.([^\\.]+)$")[, 2]
 
   return(extension_fichier)
 }
