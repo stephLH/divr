@@ -31,24 +31,6 @@ mois_ecoules <- function(date_debut, date_fin, methode = "arrondi") {
 
   return(mois_ecoules)
 }
-#' Obtenir la date du jour (format yyyy_mm_jj) pour prefixer un fichier
-#'
-#' Obtenir la date du jour (format yyyy_mm_jj) pour préfixer un fichier.
-#'
-#' @return La date du jour au format yyyy_mm_jj
-#'
-#' @examples
-#' divr::date_jour_fichier()
-#'
-#' @export
-date_jour_fichier <- function() {
-
-  date_jour_fichier <- Sys.Date() %>%
-    as.character() %>%
-    stringr::str_replace_all("-", "_")
-
-  return(date_jour_fichier)
-}
 
 #' Obtenir le numero de mois a partir du libelle
 #'
@@ -73,4 +55,34 @@ conv_lib_num_mois <- function(lib_mois) {
     .[["num_mois"]]
 
   return(conv_lib_num_mois)
+}
+
+#' Obtenir la date du jour
+#'
+#' Obtenir la date du jour.
+#'
+#' @param format Le format de la date à retourner (datage_fichier, par défaut | litteral).
+#'
+#' @return La date du jour.
+#'
+#' @examples
+#' divr::date_jour_fichier()
+#'
+#' @export
+date_jour <- function(format = "datage_fichier") {
+
+  date_jour <- Sys.Date()
+
+  if (format == "datage_fichier") {
+    date_jour <- date_jour %>%
+      as.character() %>%
+      stringr::str_replace_all("-", "_")
+  }
+
+  if (format == "litteral") {
+    date_jour <- date_jour %>%
+      format("%d %B %Y")
+  }
+
+  return(date_jour)
 }

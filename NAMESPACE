@@ -3,7 +3,7 @@
 export(charger_rdata)
 export(conv_lib_num_mois)
 export(creer_repertoire)
-export(date_jour_fichier)
+export(date_jour)
 export(doublons)
 export(extension_fichier)
 export(extraire_fichiers_zip)
