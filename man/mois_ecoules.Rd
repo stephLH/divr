@@ -29,4 +29,3 @@ divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("01/01/2001"))
 divr::mois_ecoules(lubridate::dmy("01/01/2000"), lubridate::dmy("31/12/2000"))
 
 }
-

@@ -22,4 +22,3 @@ cluster <- divr::initialiser_cluster()
 divr::stopper_cluster(cluster)
 
 }
-

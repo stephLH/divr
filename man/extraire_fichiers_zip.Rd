@@ -24,4 +24,3 @@ Extraire des fichiers d'une archive zip.
 divr::extraire_fichiers_zip("archive.zip", regex_fichier = "pdf$", repertoire_sortie = "test_zip")
 
 }
-

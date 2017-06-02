@@ -26,4 +26,3 @@ cluster <- divr::initialiser_cluster()
 divr::stopCluster(cluster)
 
 }
-

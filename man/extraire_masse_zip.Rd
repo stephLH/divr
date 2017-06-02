@@ -25,4 +25,3 @@ Extraire des fichiers des archives zip d'un répertoire (récursif).
 divr::extraire_masse_zip("Chemin/vers/un/répartoire", regex_fichier = "pdf$", repertoire_sortie = "test_zip")
 
 }
-

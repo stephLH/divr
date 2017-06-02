@@ -17,4 +17,3 @@ Créer un répertoire.
 divr::creer_repertoire("test")
 
 }
-

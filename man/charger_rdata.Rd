@@ -26,4 +26,3 @@ divr::charger_rdata(paste0(racine_packages, "divr/data/data_lib_num_mois.RData")
 divr::charger_rdata(paste0(racine_packages, "divr/data/data_lib_num_mois.RData"), "data_lib_num_mois")
 
 }
-

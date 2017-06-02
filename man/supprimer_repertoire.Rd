@@ -20,4 +20,3 @@ divr::creer_repertoire("test")
 divr::supprimer_repertoire("test")
 
 }
-

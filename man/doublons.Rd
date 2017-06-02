@@ -27,4 +27,3 @@ divr::doublons(data_frame, cle = c("cle1", "cle2"))
 divr::doublons(data_frame, cle = c("cle1", "cle2", "champ"))
 
 }
-

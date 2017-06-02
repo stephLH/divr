@@ -19,4 +19,3 @@ Extraire l'extension d'un fichier.
 divr::extension_fichier(c("fichier_excel.xlsx", "fichier_word.docx"))
 
 }
-

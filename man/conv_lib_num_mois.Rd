@@ -22,4 +22,3 @@ Obtenir le numéro de mois à partir du libellé.
 divr::conv_lib_num_mois(c("janvier", "Février", "avril"))
 
 }
-

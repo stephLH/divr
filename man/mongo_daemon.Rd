@@ -13,11 +13,10 @@ mongo_daemon(chemin_base_mongo)
 Lancer le daemon Mongo à partir de la base
 }
 \examples{
-# Le dernier dossier du répertoire "_traitement/unzip" (Il s'agit du répertoire où sont dézippés les backups Mongo)
+# Le dernier dossier du rÃ©pertoire "_traitement/unzip" (Il s'agit du rÃ©pertoire oÃ¹ sont dÃ©zippÃ©s les backups Mongo)
 paste0(disque, "_traitement/unzip") \%>\%
   list.dirs(recursive = FALSE) \%>\%
   tail(1) \%>\%
   divr::mongo_daemon()
 
 }
-
