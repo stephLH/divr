@@ -30,10 +30,11 @@ doublons <- function(table, cle){
     stop(paste0("Le(les) champ(s) \"", paste(cle, sep = ", ") ,"\" ne sont pas présents dans la table"), call. = FALSE)
   }
 
-  doublons <- dplyr::select_(table, .dots = cle) %>%
-    dplyr::group_by_(.dots = cle) %>%
+  doublons <- dplyr::select(table, !!cle) %>%
+    dplyr::group_by(.data[[cle]]) %>%
     dplyr::filter(row_number() >= 2) %>%
     dplyr::ungroup() %>%
+    dplyr::select(-cle) %>% 
     unique() %>%
     dplyr::right_join(table, ., by = cle)
 
