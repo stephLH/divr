@@ -31,10 +31,11 @@ doublons <- function(table, cle){
   }
 
   doublons <- dplyr::select(table, !!cle) %>%
-    dplyr::group_by(.data[[cle]]) %>%
+    # dplyr::group_by(.data[[cle]]) %>%
+    dplyr::group_by_(.dots = cle) %>%
     dplyr::filter(row_number() >= 2) %>%
     dplyr::ungroup() %>%
-    dplyr::select(-cle) %>% 
+    #dplyr::select(-cle) %>%
     unique() %>%
     dplyr::right_join(table, ., by = cle)
 
