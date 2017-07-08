@@ -176,3 +176,24 @@ extraire_masse_zip <- function(chemin, regex_fichier, repertoire_sortie = ".", v
 
   if (return_tibble == TRUE) return(archives_zip)
 }
+
+#' Concatener des fichiers
+#'
+#' Concaténer des fichiers.
+#'
+#' @param fichiers_entree Vecteur de fichiers à concaténer.
+#' @param fichier_sortie Chemin du fichier en sortie.
+#'
+#' @examples
+#'
+#' @export
+concatener_fichiers <- function(fichiers_entree, fichier_sortie) {
+
+  fichier_sortie <- file(fichier_sortie, "w")
+  walk(fichiers_entree,
+       ~ {
+         readLines(.) %>%
+           writeLines(fichier_sortie)
+       })
+  close(fichier_sortie)
+}
