@@ -16,14 +16,21 @@
 #' divr::charger_rdata(paste0(racine_packages, "divr/data/data_lib_num_mois.RData"), "data_lib_num_mois")
 #'
 #' @export
-charger_rdata <- function(rdata, nom_objet = NULL){
+charger_rdata <- function(chemin_rdata, nom_objet = NULL){
 
-  if (!file.exists(rdata)) {
-    stop(paste0("Le fichier \"", rdata, "\" n'existe pas."), call. = FALSE)
+  if (!file.exists(chemin_rdata)) {
+    stop(paste0("Le fichier \"", chemin_rdata, "\" n'existe pas."), call. = FALSE)
   }
 
   env = new.env()
-  load(file = rdata, envir = env)
+  load(file = chemin_rdata, envir = env)
+
+  fichier_rdata <- stringr::str_match(chemin_rdata, "([^\\/]+?\\.RData)$")[, 2]
+
+  if (length(env) == 1 & paste0(names(env)[1], ".RData") == fichier_rdata) {
+    charger_rdata <- env[[names(env)]]
+    return(charger_rdata)
+  }
 
   if (!is.null(nom_objet)) {
     charger_rdata <- env[[nom_objet]]

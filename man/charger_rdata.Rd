@@ -4,12 +4,12 @@
 \alias{charger_rdata}
 \title{Charger un objet depuis un fichier RData}
 \usage{
-charger_rdata(rdata, nom_objet = NULL)
+charger_rdata(chemin_rdata, nom_objet = NULL)
 }
 \arguments{
-\item{rdata}{Le chemin vers le fichier RData.}
-
 \item{nom_objet}{Le nom de l'objet à charger.}
+
+\item{rdata}{Le chemin vers le fichier RData.}
 }
 \value{
 Si le paramètre \code{nom_objet} reste à \code{NULL} alors l'ensemble des objets du fichier RData sont chargés dans une liste nommée.\cr
