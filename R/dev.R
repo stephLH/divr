@@ -12,7 +12,7 @@
 dependances_package <- function(repertoire = ".") {
 
   dependances <- list.files(repertoire, pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
-    purrr::map( ~ readr::read_lines(.)) %>%
+    lapply(readr::read_lines) %>%
     unlist() %>%
     stringr::str_match_all("([A-z\\.]+)::") %>%
     purrr::map_df( ~ dplyr::as_tibble(.)) %>%
