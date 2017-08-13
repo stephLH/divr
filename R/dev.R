@@ -16,7 +16,7 @@ dependances_package <- function(repertoire = ".") {
     unlist() %>%
     stringr::str_match_all("([A-z\\.]+)::") %>%
     purrr::map_df( ~ dplyr::as_tibble(.)) %>%
-    dplyr::pull(V2) %>% unique()
+    dplyr::pull(V2) %>% unique() %>% sort()
 
   return(dependances)
 }
