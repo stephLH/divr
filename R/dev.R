@@ -15,7 +15,7 @@ dependances_package <- function(repertoire = ".") {
     lapply(readr::read_lines) %>%
     unlist() %>%
     stringr::str_match_all("([[:alpha:]\\.]+)::") %>%
-    purrr::map_df( ~ dplyr::as_tibble(.)) %>%
+    purrr::map_df(dplyr::as_tibble) %>%
     dplyr::pull(V2) %>% unique() %>% sort()
 
   return(dependances)
