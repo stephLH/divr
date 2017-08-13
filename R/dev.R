@@ -9,7 +9,7 @@
 #' @examples
 #'
 #' @export
-dependances_package <- function(repertoire) {
+dependances_package <- function(repertoire = ".") {
 
   dependances <- list.files(repertoire, pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
     purrr::map( ~ readr::read_lines(.)) %>%
