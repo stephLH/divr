@@ -16,7 +16,8 @@ dependances_package <- function(repertoire = ".") {
     unlist() %>%
     stringr::str_match_all("([[:alnum:]\\.]+)::") %>%
     purrr::map_df(dplyr::as_tibble) %>%
-    dplyr::pull(V2) %>% unique() %>% sort()
+    dplyr::pull(V2) %>% unique() %>% sort() %>%
+    .[which(is.na(stringr::str_detect(., stringr::str_match(getwd(), .)[, 1])))]
 
   return(dependances)
 }
