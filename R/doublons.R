@@ -8,36 +8,29 @@
 #' @return Un extrait du data frame correspondant aux enregistrements doublon.
 #'
 #' @examples
-#' data_frame <- dplyr::data_frame(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
+#' data_frame <- tibble::tibble(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
 #'
 #' # Un exemple avec des doublons
-#' divr::doublons(data_frame, cle = c("cle1", "cle2"))
+#' divr::doublons(data_frame, cle1, cle2)
 #'
 #' # Un exemple sans doublon
-#' divr::doublons(data_frame, cle = c("cle1", "cle2", "champ"))
+#' divr::doublons(data_frame, cle1, cle2, champ))
 #'
 #' @export
-doublons <- function(table, cle){
+doublons <- function(table, ...){
 
   if (any(class(table) == "data.frame") == FALSE) {
     stop("Le premier paramètre doit être de type data.frame (ou tibble)", call. = FALSE)
   }
 
-  num_champ <- which(colnames(table) %in% cle)
+  group_by <- dplyr::quos(...)
 
-  if (length(num_champ) != length(cle)) {
-    cle_manquante <- cle[which(cle %in% colnames(table))]
-    stop(paste0("Le(les) champ(s) \"", paste(cle, sep = ", ") ,"\" ne sont pas présents dans la table"), call. = FALSE)
-  }
-
-  doublons <- dplyr::select(table, !!cle) %>%
-    # dplyr::group_by(.data[[cle]]) %>%
-    dplyr::group_by_(.dots = cle) %>%
+  doublons <- dplyr::group_by(table, !!!group_by) %>%
     dplyr::filter(row_number() >= 2) %>%
     dplyr::ungroup() %>%
-    #dplyr::select(-cle) %>%
+    dplyr::select(purrr::map_chr(group_by, dplyr::quo_name)) %>%
     unique() %>%
-    dplyr::right_join(table, ., by = cle)
+    dplyr::right_join(table, ., by = purrr::map_chr(group_by, dplyr::quo_name))
 
   return(doublons)
 }
