@@ -190,7 +190,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, repertoire_sortie = ".", v
 concatener_fichiers <- function(fichiers_entree, fichier_sortie) {
 
   fichier_sortie <- file(fichier_sortie, "w")
-  walk(fichiers_entree,
+  purrr::walk(fichiers_entree,
        ~ {
          readLines(.) %>%
            writeLines(fichier_sortie)
