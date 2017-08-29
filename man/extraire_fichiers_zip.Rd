@@ -5,14 +5,14 @@
 \title{Extraire des fichiers d'une archive zip}
 \usage{
 extraire_fichiers_zip(archive_zip, regex_fichier = NULL,
-  repertoire_sortie = ".", supprimer_zip = FALSE)
+  repertoire_sortie = NULL, supprimer_zip = FALSE)
 }
 \arguments{
 \item{archive_zip}{Chemin du fichier zip dont le contenu est extrait.}
 
 \item{regex_fichier}{Expression régulière pour filtrer les fichiers à extraire.}
 
-\item{repertoire_sortie}{Chemin du répertoire vers lequel est réalisée l'extraction (par défaut, le répertoire de travail).}
+\item{repertoire_sortie}{Chemin du répertoire vers lequel est réalisée l'extraction (par défaut, le répertoire de l'archive zip).}
 
 \item{supprimer_zip}{\code{TRUE}: l'archive zip est supprimée; \code{FALSE}: l'archive zip n'est pas supprimée..}
 }

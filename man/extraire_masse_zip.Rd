@@ -4,18 +4,17 @@
 \alias{extraire_masse_zip}
 \title{Extraire les fichiers des archives zip d'un repertoire (recursif)}
 \usage{
-extraire_masse_zip(chemin, regex_fichier, repertoire_sortie = ".",
-  vider_repertoire_sortie = TRUE, return_tibble = TRUE,
-  paralleliser = TRUE)
+extraire_masse_zip(chemin, regex_fichier, return_tibble = TRUE,
+  paralleliser = FALSE)
 }
 \arguments{
 \item{chemin}{Répertoire dans lequel sont cherchés (récursif) les archives zip dont le contenu est extrait.}
 
 \item{regex_fichier}{Expression régulière pour filtrer les fichiers à extraire.}
 
-\item{repertoire_sortie}{Chemin du répertoire vers lequel est réalisée l'extraction (par défaut, le répertoire de travail).}
-
 \item{return_tibble}{Retourne ou non un data frame fournissant la correspondance entre les archives zip initiales et l'emplacement des fichiers extraits.}
+
+\item{paralleliser}{\code{TRUE}, extraction parallelisée des archives zip.}
 }
 \description{
 Extraire des fichiers des archives zip d'un répertoire (récursif).
