@@ -117,7 +117,9 @@ supprimer_repertoire <- function(repertoire) {
 #' @export
 extraire_fichiers_zip <- function(archive_zip, regex_fichier = NULL, repertoire_sortie = NULL, supprimer_zip = FALSE) {
 
-
+  if (!file.exists(archive_zip)) {
+    stop("L'archive \"", archive_zip,"\" n'existe pas.", call. = FALSE)
+  }
 
   fichiers <- unzip(archive_zip, list = TRUE)[["Name"]]
 
