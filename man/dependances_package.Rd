@@ -4,17 +4,14 @@
 \alias{dependances_package}
 \title{Obtenir les dependances d'un packages}
 \usage{
-dependances_package(repertoire = ".")
+dependances_package(repertoire_package = ".")
 }
 \arguments{
-\item{repertoire}{Le répertoire racine du package.}
+\item{repertoire_package}{Le répertoire racine du package.}
 }
 \value{
 Un vecteur de dépendances.
 }
 \description{
 Obtenir les dépendances d'un packages.
-}
-\examples{
-
 }

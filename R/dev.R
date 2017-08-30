@@ -2,16 +2,14 @@
 #'
 #' Obtenir les dépendances d'un packages.
 #'
-#' @param repertoire Le répertoire racine du package.
+#' @param repertoire_package Le répertoire racine du package.
 #'
 #' @return Un vecteur de dépendances.
 #'
-#' @examples
-#'
 #' @export
-dependances_package <- function(repertoire = ".") {
+dependances_package <- function(repertoire_package = ".") {
 
-  dependances <- list.files(repertoire, pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
+  dependances <- list.files(repertoire_package, pattern = "\\.R$", full.names = TRUE, recursive = TRUE) %>%
     lapply(readr::read_lines) %>%
     unlist() %>%
     stringr::str_match_all("([[:alnum:]\\.]+)::") %>%
