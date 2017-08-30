@@ -117,6 +117,8 @@ supprimer_repertoire <- function(repertoire) {
 #' @export
 extraire_fichiers_zip <- function(archive_zip, regex_fichier = NULL, repertoire_sortie = NULL, supprimer_zip = FALSE) {
 
+
+
   fichiers <- unzip(archive_zip, list = TRUE)[["Name"]]
 
   if (!is.null(regex_fichier)) fichiers <- fichiers[stringr::str_detect(fichiers, regex_fichier)]
@@ -149,14 +151,25 @@ extraire_fichiers_zip <- function(archive_zip, regex_fichier = NULL, repertoire_
 #' @export
 extraire_masse_zip <- function(chemin, regex_fichier, return_tibble = TRUE, paralleliser = FALSE) {
 
+  if (!dir.exists(chemin)) {
+    stop("Le répertoire \"", chemin,"\" n'existe pas.", call. = FALSE)
+  }
+
   if (paralleliser == TRUE) {
     clusters <- divr::initialiser_cluster()
   } else {
     clusters <- NULL
   }
 
-  archives_zip <- dplyr::tibble(archive_zip = list.files(chemin, pattern = "\\.zip$", recursive = TRUE, full.names = TRUE)) %>%
-    dplyr::mutate(num_archive = row_number() %>% as.character())
+  archives_zip <- dplyr::tibble(archive_zip = list.files(chemin, pattern = "\\.zip$", recursive = TRUE, full.names = TRUE))
+
+  if (nrow(archives_zip) == 0) {
+    message("Aucune archive zip dans le répertoire \"", chemin,"\"")
+    return(invisible(NULL))
+  }
+
+  archives_zip <- archives_zip %>%
+    dplyr::mutate(num_archive = dplyr::row_number(archive_zip) %>% as.character())
 
   archives_zip <- purrr::map_df(archives_zip$archive_zip, unzip, list = TRUE, .id = "num_archive") %>%
     dplyr::select(num_archive, fichier = Name) %>%
