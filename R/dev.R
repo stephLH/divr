@@ -19,3 +19,18 @@ dependances_package <- function(repertoire_package = ".") {
 
   return(dependances)
 }
+
+#' Construire un package
+#'
+#' Construire un package.
+#'
+#' @param repertoire_package Le répertoire racine du package.
+#'
+#' @export
+construction_package <- function(repertoire_package) {
+
+  devtools::document(repertoire_package, roclets = c('rd', 'collate', 'namespace'))
+  zip <- devtools::build(repertoire_package, binary = TRUE, args = "--no-multiarch --with-keep.source")
+  file.remove(zip) %>% invisible()
+
+}

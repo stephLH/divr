@@ -2,6 +2,7 @@
 
 export(charger_rdata)
 export(concatener_fichiers)
+export(construction_package)
 export(conv_lib_num_mois)
 export(creer_repertoire)
 export(data)
