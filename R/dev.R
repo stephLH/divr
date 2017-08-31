@@ -24,13 +24,13 @@ dependances_package <- function(repertoire_package = ".") {
 #'
 #' Construire un package.
 #'
-#' @param repertoire_package Le répertoire racine du package.
+#' @param package Le nom du package.
 #'
 #' @export
-construction_package <- function(repertoire_package) {
+construction_package <- function(package) {
 
-  devtools::document(repertoire_package, roclets = c('rd', 'collate', 'namespace'))
-  zip <- devtools::build(repertoire_package, binary = TRUE, args = "--no-multiarch --with-keep.source")
+  devtools::document(paste0(racine_packages, package), roclets = c('rd', 'collate', 'namespace'))
+  zip <- devtools::build(paste0(racine_packages, package), binary = TRUE, args = "--no-multiarch --with-keep.source")
   file.remove(zip) %>% invisible()
 
 }

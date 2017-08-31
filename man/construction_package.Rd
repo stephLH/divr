@@ -4,10 +4,10 @@
 \alias{construction_package}
 \title{Construire un package}
 \usage{
-construction_package(repertoire_package)
+construction_package(package)
 }
 \arguments{
-\item{repertoire_package}{Le répertoire racine du package.}
+\item{package}{Le nom du package.}
 }
 \description{
 Construire un package.
