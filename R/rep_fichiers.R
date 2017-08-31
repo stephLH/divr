@@ -179,7 +179,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, return_tibble = TRUE, para
     dplyr::inner_join(archives_zip, ., by = "num_archive") %>%
     dplyr::select(-num_archive)
 
-  message("Décompression zip des fichiers...")
+  message("Décompression zip de ", length(archives_zip$archive_zip), " fichier(s)...")
 
   archives_zip %>%
     split(1:nrow(.)) %>%
