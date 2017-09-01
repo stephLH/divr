@@ -1,6 +1,7 @@
 #' data
 #'
 #' @export
+#' @keywords internal
 data <- function() {
 
   data_lib_num_mois <- importr::importer_table_access("libelle_num_mois", paste0(racine_packages, "divr/data/Tables_ref.accdb"))
