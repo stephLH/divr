@@ -109,7 +109,8 @@ age_moyen_litteral <- function(age_moyen) {
   mois <- dplyr::case_when(
     mois >= 1 ~ "mois",
     TRUE ~ NA_character_
-  )
+  ) %>%
+    caractr::paste2(mois, .)
 
   annee <- floor(age_moyen)
 
@@ -117,7 +118,8 @@ age_moyen_litteral <- function(age_moyen) {
     annee == 1 ~ "an",
     annee >= 2 ~ "ans",
     TRUE ~ NA_character_
-    )
+    ) %>%
+    caractr::paste2(annee, .)
 
   age_moyen_litteral <- caractr::paste2(annee, mois, sep = " et ")
 
