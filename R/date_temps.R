@@ -86,3 +86,40 @@ date_jour <- function(format = "datage_fichier") {
 
   return(date_jour)
 }
+
+#' Obtenir un age moyen sous forme litterale
+#'
+#' Obtenir un âge moyen sous forme littérale.
+#'
+#' @param format l'âge moyen au format numérique.
+#'
+#' @return l'âge moyen au format littéral.
+#'
+#' @examples
+#' divr::age_moyen_literral(25.64048)
+#'
+#' @export
+age_moyen_litteral <- function(age_moyen) {
+
+  mois <- age_moyen %>%
+    { . - floor(.) } %>%
+    { . * 12 } %>%
+    round()
+
+  mois <- dplyr::case_when(
+    mois >= 1 ~ "mois",
+    TRUE ~ NA_character_
+  )
+
+  annee <- floor(age_moyen)
+
+  annee <- dplyr::case_when(
+    annee == 1 ~ "an",
+    annee >= 2 ~ "ans",
+    TRUE ~ NA_character_
+    )
+
+  age_moyen_litteral <- caractr::paste2(annee, mois, sep = " et ")
+
+  return(age_moyen_litteral)
+}
