@@ -19,10 +19,10 @@ Sinon, seul l'élément passé en paramètre \code{nom_objet} est chargé.
 Charger un objet depuis un fichier RData.
 }
 \examples{
-# Chargement dans une liste de tous les objets d'un fichier RData (ici, un seul objet nommé "data_lib_num_mois"))
-divr::charger_rdata(paste0(racine_packages, "divr/data/data_lib_num_mois.RData"))
+# Chargement dans une liste de tous les objets d'un fichier RData (ici, un seul objet nommé "lib_num_mois"))
+divr::charger_rdata(paste0(racine_packages, "divr/data/lib_num_mois.RData"))
 
 # Chargement d'un objet déterminé
-divr::charger_rdata(paste0(racine_packages, "divr/data/data_lib_num_mois.RData"), "data_lib_num_mois")
+divr::charger_rdata(paste0(racine_packages, "divr/data/lib_num_mois.RData"), "lib_num_mois")
 
 }

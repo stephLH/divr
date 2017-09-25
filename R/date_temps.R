@@ -51,7 +51,7 @@ conv_lib_num_mois <- function(lib_mois) {
 
   conv_lib_num_mois <- dplyr::data_frame(lib_mois) %>%
     dplyr::mutate(lib_mois = tolower(lib_mois)) %>%
-    dplyr::left_join(divr::data_lib_num_mois, by = "lib_mois") %>%
+    dplyr::left_join(divr::lib_num_mois, by = "lib_mois") %>%
     .[["num_mois"]]
 
   return(conv_lib_num_mois)
