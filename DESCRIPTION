@@ -9,12 +9,10 @@ License: Etalab
 Encoding: UTF-8
 LazyData: true
 Imports:
-    caractr,
     devtools,
     doParallel,
   	dplyr,
-  	importr,
-    lubridate,
+  	lubridate,
     parallel,
     pbapply,
     purrr,
