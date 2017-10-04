@@ -216,11 +216,9 @@ extraire_masse_zip <- function(chemin, regex_fichier, return_tibble = TRUE, para
 #' @export
 concatener_fichiers <- function(fichiers_entree, fichier_sortie) {
 
+  fichiers <- lapply(fichiers_entree, readLines)
+
   fichier_sortie <- file(fichier_sortie, "w")
-  purrr::walk(fichiers_entree,
-       ~ {
-         readLines(.) %>%
-           writeLines(fichier_sortie)
-       })
+  purrr::walk(fichiers, ~ writeLines(., fichier_sortie))
   close(fichier_sortie)
 }
