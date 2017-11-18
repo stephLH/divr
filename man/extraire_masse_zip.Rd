@@ -4,13 +4,15 @@
 \alias{extraire_masse_zip}
 \title{Extraire les fichiers des archives zip d'un repertoire (recursif)}
 \usage{
-extraire_masse_zip(chemin, regex_fichier, return_tibble = TRUE,
-  paralleliser = FALSE)
+extraire_masse_zip(chemin, regex_fichier, regex_zip = NULL,
+  return_tibble = TRUE, paralleliser = FALSE)
 }
 \arguments{
 \item{chemin}{Répertoire dans lequel sont cherchés (récursif) les archives zip dont le contenu est extrait.}
 
-\item{regex_fichier}{Expression régulière pour filtrer les fichiers à extraire.}
+\item{regex_fichier}{Expression régulière pour filtrer les fichiers csv à extraire.}
+
+\item{regex_zip}{Expression régulière pour filtrer les archives zip à traiter.}
 
 \item{return_tibble}{Retourne ou non un data frame fournissant la correspondance entre les archives zip initiales et l'emplacement des fichiers extraits.}
 
