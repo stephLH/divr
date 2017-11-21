@@ -19,3 +19,7 @@ count_agregats(table, ..., valeur_total = "Total")
 \description{
 count_agregats
 }
+\examples{
+tibble::tibble(var1 = c(1, 1, 2, 2) \%>\% as.character(), var2 = c(1, 2, 1, 2) \%>\% as.character(), var3 = c(1, 2, 2, 2) \%>\% as.character())
+
+}
