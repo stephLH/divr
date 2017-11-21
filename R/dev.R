@@ -31,6 +31,9 @@ construction_package <- function(package) {
 
   devtools::document(paste0(racine_packages, package), roclets = c('rd', 'collate', 'namespace'))
   zip <- devtools::build(paste0(racine_packages, package), binary = TRUE, args = "--no-multiarch --with-keep.source")
-  file.remove(zip) %>% invisible()
+  if (file.exists(zip)) {
+    file.remove(zip) %>% invisible()
+  }
+  .rs.restartR()
 
 }
