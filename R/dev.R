@@ -25,15 +25,20 @@ dependances_package <- function(repertoire_package = ".") {
 #' Construire un package.
 #'
 #' @param package Le nom du package.
+#' @param documentation Génération de la documentation, \code{TRUE} par défaut.
 #'
 #' @export
-construction_package <- function(package) {
+construction_package <- function(package, documentation = TRUE) {
 
-  devtools::document(paste0(racine_packages, package), roclets = c('rd', 'collate', 'namespace'))
+  if (documentation == TRUE) {
+    devtools::document(paste0(racine_packages, package), roclets = c('rd', 'collate', 'namespace'))
+  }
+
   zip <- devtools::build(paste0(racine_packages, package), binary = TRUE, args = "--no-multiarch --with-keep.source")
   if (file.exists(zip)) {
     file.remove(zip) %>% invisible()
   }
+
   .rs.restartR()
 
 }

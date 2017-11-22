@@ -4,10 +4,12 @@
 \alias{construction_package}
 \title{Construire un package}
 \usage{
-construction_package(package)
+construction_package(package, documentation = TRUE)
 }
 \arguments{
 \item{package}{Le nom du package.}
+
+\item{documentation}{Génération de la documentation, \code{TRUE} par défaut.}
 }
 \description{
 Construire un package.
