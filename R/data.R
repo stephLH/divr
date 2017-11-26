@@ -83,7 +83,7 @@ maj_champ <- function(table, table_pivot, champ_maj, ...) {
     dplyr::mutate(!!nom_champ_maj := divr::remplacer_na(!!champ_maj, .champ_maj, remplacement = "na_courant")) %>%
     dplyr::select(-.champ_maj)
 
-  ajout <- dplyr::filter(table, !is.na(!!champ_maj))
+  ajout <- tidyr::drop_na(table, !!champ_maj)
 
   maj_champ <- dplyr::bind_rows(maj_champ, ajout)
 
