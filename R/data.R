@@ -64,10 +64,10 @@ remplacer_na <- function(courant, cible, remplacement = "défaut"){
 #' @param table \dots
 #' @param table_pivot \dots
 #' @param champ_maj \dots
-#' @param \dots
+#' @param doublons \dots
 #'
 #' @export
-maj_champ <- function(table, table_pivot, champ_maj, ...) {
+maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
 
   cle_noms <- dplyr::quos(...) %>%
     purrr::map_chr(dplyr::quo_name)
@@ -75,11 +75,17 @@ maj_champ <- function(table, table_pivot, champ_maj, ...) {
   champ_maj <- dplyr::enquo(champ_maj)
   nom_champ_maj <- dplyr::quo_name(champ_maj)
 
+  table_pivot <- table_pivot %>%
+    dplyr::select(cle_noms, .champ_maj = !!champ_maj)
+
+  if (doublons == FALSE) {
+    table_pivot <- table_pivot %>%
+      dplyr::anti_join(divr::doublons(table_pivot, ...), by = cle_noms)
+  }
+
   maj_champ <- table %>%
     dplyr::filter(is.na(!!champ_maj)) %>%
-    dplyr::left_join(table_pivot %>%
-                       dplyr::select(cle_noms, .champ_maj = !!champ_maj),
-                     by = cle_noms) %>%
+    dplyr::left_join(table_pivot, by = cle_noms) %>%
     dplyr::mutate(!!nom_champ_maj := divr::remplacer_na(!!champ_maj, .champ_maj, remplacement = "na_courant")) %>%
     dplyr::select(-.champ_maj)
 
@@ -89,4 +95,3 @@ maj_champ <- function(table, table_pivot, champ_maj, ...) {
 
   return(maj_champ)
 }
-

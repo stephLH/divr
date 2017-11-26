@@ -4,7 +4,7 @@
 \alias{maj_champ}
 \title{maj_champ}
 \usage{
-maj_champ(table, table_pivot, champ_maj, ...)
+maj_champ(table, table_pivot, champ_maj, ..., doublons = TRUE)
 }
 \arguments{
 \item{table}{\dots}
@@ -13,7 +13,7 @@ maj_champ(table, table_pivot, champ_maj, ...)
 
 \item{champ_maj}{\dots}
 
-\item{\dots}{}
+\item{doublons}{\dots}
 }
 \description{
 maj_champ
