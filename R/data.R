@@ -44,6 +44,11 @@ doublons <- function(table, ...){
 #' @export
 remplacer_na <- function(courant, cible, remplacement = "défaut"){
 
+  if (length(cible) == 1) {
+    cible <- rep(cible, length(courant))
+    remplacement <- "na_courant"
+  }
+
   if (length(courant) != length(cible)) {
     stop(paste0("Les vecteur courant et cible doivent être de même taille."), call. = FALSE)
   } else if (class(courant) != class(cible)) {
