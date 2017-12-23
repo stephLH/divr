@@ -8,7 +8,7 @@
 #' @return Un extrait du data frame correspondant aux enregistrements doublon.
 #'
 #' @examples
-#' data_frame <- tibble::tibble(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
+#' data_frame <- dplyr::tibble(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
 #'
 #' # Un exemple avec des doublons
 #' divr::doublons(data_frame, cle1, cle2)
