@@ -4,7 +4,7 @@
 \alias{dependances_package}
 \title{Obtenir les dependances d'un packages}
 \usage{
-dependances_package(repertoire_package = ".")
+dependances_package(repertoire_package = getwd())
 }
 \arguments{
 \item{repertoire_package}{Le répertoire racine du package.}
