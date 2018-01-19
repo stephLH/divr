@@ -64,6 +64,42 @@ remplacer_na <- function(courant, cible, remplacement = "défaut"){
   return(courant)
 }
 
+#' remplacer_si
+#'
+#' @param courant \dots
+#' @param cible \dots
+#' @param condition \dots
+#' @param na_cible \dots
+#'
+#' @export
+remplacer_si <- function(courant, cible, condition = TRUE, na_cible = FALSE){
+
+  if (length(cible) == 1) {
+    cible <- rep(cible, length(courant))
+  }
+
+  if (length(courant) != length(cible)) {
+    stop(paste0("Les vecteur courant et cible doivent être de même taille."), call. = FALSE)
+  } else if (class(courant) != class(cible)) {
+    stop(paste0("Les vecteur courant et cible doivent être de même classe"), call. = FALSE)
+  }
+
+  if (length(condition) == 1 & length(courant) >= 2) {
+    if (condition == TRUE) {
+      condition <- rep(TRUE, length(courant))
+    }
+  }
+
+  if (na_cible == FALSE) {
+    condition <- condition & !is.na(cible)
+  }
+
+  courant <- ifelse(condition, cible, courant)
+
+
+  return(courant)
+}
+
 #' maj_champ
 #'
 #' @param table \dots
@@ -99,4 +135,19 @@ maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
   maj_champ <- dplyr::bind_rows(maj_champ, ajout)
 
   return(maj_champ)
+}
+
+#' anti_join_bind
+#'
+#' @param x \dots
+#' @param y \dots
+#' @param by \dots
+#'
+#' @export
+anti_join_bind <- function(x, y, by = NULL) {
+
+  x %>%
+    dplyr::anti_join(y, by) %>%
+    dplyr::bind_rows(y)
+
 }
