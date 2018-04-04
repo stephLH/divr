@@ -7,9 +7,9 @@
 anti_join_bind(x, y, by = NULL)
 }
 \arguments{
-\item{x}{\dots}
+\item{x}{Table pivot}
 
-\item{y}{\dots}
+\item{y}{Table tierce}
 
 \item{by}{\dots}
 }

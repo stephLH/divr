@@ -139,15 +139,15 @@ maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
 
 #' anti_join_bind
 #'
-#' @param x \dots
-#' @param y \dots
+#' @param x Table pivot
+#' @param y Table tierce
 #' @param by \dots
 #'
 #' @export
 anti_join_bind <- function(x, y, by = NULL) {
 
-  x %>%
-    dplyr::anti_join(y, by) %>%
-    dplyr::bind_rows(y)
+  y %>%
+    dplyr::anti_join(x, by) %>%
+    dplyr::bind_rows(x)
 
 }
