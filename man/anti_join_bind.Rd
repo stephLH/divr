@@ -4,7 +4,7 @@
 \alias{anti_join_bind}
 \title{anti_join_bind}
 \usage{
-anti_join_bind(x, y, by = NULL)
+anti_join_bind(x, y, by, arrange = TRUE)
 }
 \arguments{
 \item{x}{Table pivot}
@@ -12,6 +12,8 @@ anti_join_bind(x, y, by = NULL)
 \item{y}{Table tierce}
 
 \item{by}{\dots}
+
+\item{arrange}{\dots}
 }
 \description{
 anti_join_bind

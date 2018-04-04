@@ -142,12 +142,18 @@ maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
 #' @param x Table pivot
 #' @param y Table tierce
 #' @param by \dots
+#' @param arrange \dots
 #'
 #' @export
-anti_join_bind <- function(x, y, by = NULL) {
+anti_join_bind <- function(x, y, by, arrange = TRUE) {
 
-  y %>%
+  anti_join_bind <- y %>%
     dplyr::anti_join(x, by) %>%
-    dplyr::bind_rows(x)
+    dplyr::bind_rows(x, .)
 
+  if (arrange == TRUE) {
+    anti_join_bind <- dplyr::arrange(anti_join_bind, !!!rlang::parse_quosure(by))
+  }
+
+  return(anti_join_bind)
 }
