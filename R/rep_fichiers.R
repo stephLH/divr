@@ -174,7 +174,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
   }
 
   archives_zip <- archives_zip %>%
-    dplyr::mutate(num_archive = dplyr::row_number(archive_zip) %>% as.character())
+    dplyr::mutate(num_archive = dplyr::row_number() %>% as.character())
 
   archives_zip <- purrr::map_df(archives_zip$archive_zip, unzip, list = TRUE, .id = "num_archive") %>%
     dplyr::select(num_archive, fichier = Name) %>%
@@ -185,10 +185,10 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
   if (nrow(archives_zip) > abs(n_fichiers)) {
 
     if (n_fichiers > 0) {
-      archives_zip <- dplyr::filter(archives_zip, row_number() <= n_fichiers)
+      archives_zip <- dplyr::filter(archives_zip, dplyr::row_number() <= n_fichiers)
     } else if (n_fichiers < 0) {
       archives_zip <- archives_zip %>%
-        dplyr::filter(row_number() > n() + n_fichiers)
+        dplyr::filter(dplyr::row_number() > n() + n_fichiers)
     }
 
   }

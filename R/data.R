@@ -26,7 +26,7 @@ doublons <- function(table, ...){
   group_by <- dplyr::quos(...)
 
   doublons <- dplyr::group_by(table, !!!group_by) %>%
-    dplyr::filter(row_number() >= 2) %>%
+    dplyr::filter(dplyr::row_number() >= 2) %>%
     dplyr::ungroup() %>%
     dplyr::select(purrr::map_chr(group_by, dplyr::quo_name)) %>%
     unique() %>%
