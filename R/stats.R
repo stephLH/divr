@@ -7,7 +7,7 @@
 #' @return
 #'
 #' @examples
-#' tibble::dplyr(var1 = c(1, 1, 2, 2) %>% as.character(), var2 = c(1, 2, 1, 2) %>% as.character(), var3 = c(1, 2, 2, 2) %>% as.character())
+#' dplyr::tibble(var1 = c(1, 1, 2, 2) %>% as.character(), var2 = c(1, 2, 1, 2) %>% as.character(), var3 = c(1, 2, 2, 2) %>% as.character())
 #'
 #' @export
 count_agregats <- function(table, ..., valeur_total = "Total") {
