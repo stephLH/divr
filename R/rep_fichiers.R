@@ -86,11 +86,30 @@ extension_fichier <- function(fichier) {
 #' divr::extraire_nom_fichier(c("Dossier/fichier_excel.xlsx", "Dossier2/fichier_word.docx"))
 #'
 #' @export
-extraire_nom_fichier <- function(chemin_fichier) {
+  extraire_nom_fichier <- function(chemin_fichier) {
 
   nom_fichier <- stringr::str_match(chemin_fichier, "([^\\/]+?)$")[, 2]
 
   return(nom_fichier)
+}
+
+#' Extraire le chemin a partir du chemin complet
+#'
+#' Extraire le chemin à partir du chemin complet.
+#'
+#' @param chemin_fichier Chemin complet dont le chemin est extrait.
+#'
+#' @return Le chemin.
+#'
+#' @examples
+#' divr::extraire_chemin(c("Test/Dossier/fichier_excel.xlsx", "Test2/Dossier2/fichier_word.docx"))
+#'
+#' @export
+extraire_chemin <- function(chemin_fichier) {
+
+  chemin <- stringr::str_match(chemin_fichier, "(.+)/[^/]+?$")[, 2]
+
+  return(chemin)
 }
 
 #' Supprimer un repertoire
