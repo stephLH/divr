@@ -42,3 +42,32 @@ construction_package <- function(package, documentation = TRUE) {
   .rs.restartR()
 
 }
+
+#' Rechercher une syntaxe de code dans les fichiers R
+#'
+#' Rechercher une syntaxe de code dans les fichiers R.
+#'
+#' @param code Le code R à rechercher.
+#' @param chemin Le chemin contenant les programmes R.
+#'
+#' @return Un tibble à trois champs : le fichier, le numéro de ligne et le code contenant la synatxe recherchée.
+#'
+#' @export
+rechercher_code <- function(code, chemin) {
+
+  fichiers <- list.files(chemin, recursive = TRUE, pattern = "\\.R$", full.names = TRUE)
+
+  rechercher_code <- dplyr::tibble(
+    fichier = fichiers,
+    code = purrr::map(fichiers, readr::read_table, col_names = "code", col_types = "c")
+  ) %>%
+    tidyr::unnest() %>%
+    dplyr::group_by(fichier) %>%
+    dplyr::mutate(ligne = dplyr::row_number()) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(fichier, ligne, code) %>%
+    tidyr::drop_na(code) %>%
+    dplyr::filter(stringr::str_detect(code, !!code))
+
+  return(rechercher_code)
+}
