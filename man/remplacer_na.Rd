@@ -4,7 +4,7 @@
 \alias{remplacer_na}
 \title{remplacer_na}
 \usage{
-remplacer_na(courant, cible, remplacement = "défaut")
+remplacer_na(courant, cible, remplacement = "dÃ©faut")
 }
 \arguments{
 \item{courant}{\dots}
