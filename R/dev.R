@@ -55,7 +55,7 @@ construction_package <- function(package, documentation = TRUE) {
 #' @export
 rechercher_code <- function(code, chemin) {
 
-  fichiers <- list.files(chemin, recursive = TRUE, pattern = "\\.R$", full.names = TRUE)
+  fichiers <- list.files(chemin, recursive = TRUE, pattern = "\\.(R|Rmd)$", full.names = TRUE)
 
   rechercher_code <- dplyr::tibble(
     fichier = fichiers,
