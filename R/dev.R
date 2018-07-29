@@ -71,3 +71,25 @@ rechercher_code <- function(code, chemin) {
 
   return(rechercher_code)
 }
+
+#' Remplacer une syntaxe de code dans les fichiers R
+#'
+#' Remplacer une syntaxe de code dans les fichiers R.
+#'
+#' @param code Le code R à rechercher.
+#' @param remplacement Le code R de remplacement.
+#' @param chemin Le chemin contenant les programmes R.
+#'
+#' @export
+remplacer_code <- function(code, remplacement, chemin) {
+
+  fichiers <- divr::rechercher_code(code, chemin) %>%
+    dplyr::pull(fichier) %>%
+    unique()
+
+  import_code <- purrr::map(fichiers, readr::read_lines) %>%
+    purrr::map(stringr::str_replace_all, code, remplacement)
+
+  purrr::walk2(import_code, fichiers, readr::write_lines)
+
+}
