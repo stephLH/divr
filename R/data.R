@@ -1,38 +1,35 @@
-#' Extraire les doublons d'une table selon un ou plusieurs champs
+#' Extract duplicate rows from a data frame.
 #'
-#' Extraire les doublons d'une table selon un ou plusieurs champs.
+#' @param A data frame.
 #'
-#' @param table Data frame dans lequel sont extraits les doublons.
-#' @param cle Vecteur de noms de champ au croisement desquels sont extraits les doublons.
-#'
-#' @return Un extrait du data frame correspondant aux enregistrements doublon.
+#' @return A data frame containing only the duplicate rows.
 #'
 #' @examples
-#' data_frame <- dplyr::tibble(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
+#' data <- dplyr::tibble(cle1 = c("A", "A", "B", "B"), cle2 = c("1", "1", "2", "3"), champ = 1:4)
 #'
-#' # Un exemple avec des doublons
-#' divr::doublons(data_frame, cle1, cle2)
+#' # With duplicate
+#' divr::duplicate(data, cle1, cle2)
 #'
-#' # Un exemple sans doublon
-#' divr::doublons(data_frame, cle1, cle2, champ))
+#' # Without duplicate
+#' divr::duplicate(data, cle1, cle2, champ))
 #'
 #' @export
-doublons <- function(table, ...){
+duplicate <- function(data, ...){
 
-  if (any(class(table) == "data.frame") == FALSE) {
-    stop("Le premier paramètre doit être de type data.frame (ou tibble)", call. = FALSE)
+  if (any(class(data) == "data.frame") == FALSE) {
+    stop("The first paramater must be a data frame", call. = FALSE)
   }
 
   group_by <- dplyr::quos(...)
 
-  doublons <- dplyr::group_by(table, !!!group_by) %>%
+  duplicate <- dplyr::group_by(data, !!!group_by) %>%
     dplyr::filter(dplyr::row_number() >= 2) %>%
     dplyr::ungroup() %>%
     dplyr::select(purrr::map_chr(group_by, dplyr::quo_name)) %>%
     unique() %>%
-    dplyr::right_join(table, ., by = purrr::map_chr(group_by, dplyr::quo_name))
+    dplyr::right_join(data, ., by = purrr::map_chr(group_by, dplyr::quo_name))
 
-  return(doublons)
+  return(duplicate)
 }
 
 #' remplacer_na
@@ -121,7 +118,7 @@ maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
 
   if (doublons == FALSE) {
     table_pivot <- table_pivot %>%
-      dplyr::anti_join(divr::doublons(table_pivot, ...), by = cle_noms)
+      dplyr::anti_join(divr::duplicate(table_pivot, ...), by = cle_noms)
   }
 
   maj_champ <- table %>%
