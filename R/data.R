@@ -68,42 +68,6 @@ patch_vector <- function(current, target, only_na = FALSE){
   return(current)
 }
 
-#' remplacer_si
-#'
-#' @param courant \dots
-#' @param cible \dots
-#' @param condition \dots
-#' @param na_cible \dots
-#'
-#' @export
-remplacer_si <- function(courant, cible, condition = TRUE, na_cible = FALSE){
-
-  if (length(cible) == 1) {
-    cible <- rep(cible, length(courant))
-  }
-
-  if (length(courant) != length(cible)) {
-    stop(paste0("Les vecteur courant et cible doivent être de même taille."), call. = FALSE)
-  } else if (class(courant) != class(cible)) {
-    stop(paste0("Les vecteur courant et cible doivent être de même classe"), call. = FALSE)
-  }
-
-  if (length(condition) == 1 & length(courant) >= 2) {
-    if (condition == TRUE) {
-      condition <- rep(TRUE, length(courant))
-    }
-  }
-
-  if (na_cible == FALSE) {
-    condition <- condition & !is.na(cible)
-  }
-
-  courant <- ifelse(condition, cible, courant)
-
-
-  return(courant)
-}
-
 #' maj_champ
 #'
 #' @param table \dots
