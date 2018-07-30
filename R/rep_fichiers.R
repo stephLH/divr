@@ -33,84 +33,77 @@ zip_extract_file <- function(zip_file, pattern = NULL, exdir = NULL, remove_zip 
   }
 }
 
-#' Extraire les fichiers des archives zip d'un repertoire (recursif)
+#' Extract files from zip located in a path.
 #'
-#' Extraire des fichiers des archives zip d'un répertoire (récursif).
-#'
-#' @param chemin Répertoire dans lequel sont cherchés (récursif) les archives zip dont le contenu est extrait.
-#' @param regex_fichier Expression régulière pour filtrer les fichiers csv à extraire.
-#' @param regex_zip Expression régulière pour filtrer les archives zip à traiter.
-#' @param n_fichiers Nombre de fichiers à importer. Une valeur négative correspond au nombre de fichiers à partir de la fin dans la liste.
-#' @param return_tibble Retourne ou non un data frame fournissant la correspondance entre les archives zip initiales et l'emplacement des fichiers extraits.
-#' @param paralleliser \code{TRUE}, extraction parallelisée des archives zip.
+#' @param path Path where the zip files are located (recursive).
+#' @param pattern an optional regular expression. Only file names which match the regular expression will be extracted.
+#' @param pattern_zip an optional regular expression. Only zip file names which match the regular expression will be unziped.
+#' @param n_files Number of files to extract. A negative value will starts from the bottom of the files list.
+#' @param parallel If \code{TRUE}, a parallelised extraction is performed.
 #'
 #' @examples
-#' # Extraire les fichiers pdf stockés dans les archives zip du répertoire "Chemin/vers/un/répartoire"
-#' divr::extraire_masse_zip("Chemin/vers/un/répartoire", regex_fichier = "pdf$", repertoire_sortie = "test_zip")
+#' divr::zip_extract_path("Chemin/vers/un/répartoire", pattern = "pdf$")
 #'
 #' @export
-extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_fichiers = Inf, return_tibble = TRUE, paralleliser = FALSE) {
+zip_extract_path <- function(path, pattern, pattern_zip = "\\.zip$", n_files = Inf, parallel = FALSE) {
 
-  if (!dir.exists(chemin)) {
-    stop("Le répertoire \"", chemin,"\" n'existe pas.", call. = FALSE)
+  if (!dir.exists(path)) {
+    stop("The path \"", path,"\" does not exist", call. = FALSE)
   }
 
-  if (paralleliser == TRUE) {
+  if (parallel == TRUE) {
     clusters <- divr::cl_initialise()
   } else {
     clusters <- NULL
   }
 
-  archives_zip <- dplyr::tibble(archive_zip = list.files(chemin, recursive = TRUE, full.names = TRUE) %>%
-                                  stringr::str_subset(regex_zip))
+  zip_files <- dplyr::tibble(zip_file = list.files(path, recursive = TRUE, full.names = TRUE) %>%
+                               stringr::str_subset(pattern_zip))
 
-  if (nrow(archives_zip) == 0) {
-    message("Aucune archive zip dans le répertoire \"", chemin,"\"")
+  if (nrow(zip_files) == 0) {
+    message("There is no zip file in the path : \"", path,"\"")
     return(invisible(NULL))
   }
 
-  archives_zip <- archives_zip %>%
-    dplyr::mutate(num_archive = dplyr::row_number() %>% as.character())
+  zip_files <- zip_files %>%
+    dplyr::mutate(id_zip = dplyr::row_number() %>% as.character())
 
-  archives_zip <- purrr::map_df(archives_zip$archive_zip, unzip, list = TRUE, .id = "num_archive") %>%
-    dplyr::select(num_archive, fichier = Name) %>%
-    dplyr::filter(stringr::str_detect(fichier, regex_fichier)) %>%
-    dplyr::inner_join(archives_zip, ., by = "num_archive") %>%
-    dplyr::select(-num_archive)
+  zip_files <- purrr::map_df(zip_files$zip_file, unzip, list = TRUE, .id = "id_zip") %>%
+    dplyr::select(id_zip, file = Name) %>%
+    dplyr::filter(stringr::str_detect(file, pattern)) %>%
+    dplyr::inner_join(zip_files, ., by = "id_zip") %>%
+    dplyr::select(-id_zip)
 
-  if (nrow(archives_zip) > abs(n_fichiers)) {
+  if (nrow(zip_files) > abs(n_files)) {
 
-    if (n_fichiers > 0) {
-      archives_zip <- dplyr::filter(archives_zip, dplyr::row_number() <= n_fichiers)
-    } else if (n_fichiers < 0) {
-      archives_zip <- archives_zip %>%
-        dplyr::filter(dplyr::row_number() > n() + n_fichiers)
+    if (n_files > 0) {
+      zip_files <- dplyr::filter(zip_files, dplyr::row_number() <= n_files)
+    } else if (n_files < 0) {
+      zip_files <- zip_files %>%
+        dplyr::filter(dplyr::row_number() > n() + n_files)
     }
 
   }
 
-  message("Décompression zip de ", length(archives_zip$archive_zip), " fichier(s)...")
+  message("Extraction from ", length(zip_files$zip_file), " zip file(s)...")
 
-  decompression <- archives_zip %>%
+  decompression <- zip_files %>%
     split(1:nrow(.)) %>%
     pbapply::pblapply(function(ligne) {
 
-      divr::zip_extract_file(ligne$archive_zip,
-                                  regex_fichier = regex_fichier)
+      divr::zip_extract_file(ligne$zip_file, pattern = pattern)
 
     }, cl = clusters)
 
-  if (paralleliser == TRUE) {
+  if (parallel == TRUE) {
     divr::cl_stop(clusters)
   }
 
-  if (return_tibble == TRUE) {
-    archives_zip <- archives_zip %>%
-      dplyr::mutate(repertoire_sortie = stringr::str_match(archive_zip, "(.+)/")[, 2],
-                    fichier = paste0(repertoire_sortie, "/", fichier))
-    return(archives_zip)
-  }
+  zip_files <- zip_files %>%
+    dplyr::mutate(exdir = stringr::str_match(zip_file, "(.+)/")[, 2],
+                  file = paste0(exdir, "/", file))
 
+  return(zip_files)
 }
 
 #' Concatener des fichiers
