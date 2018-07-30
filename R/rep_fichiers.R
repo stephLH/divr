@@ -59,33 +59,6 @@ extraire_chemin <- function(chemin_fichier) {
   return(chemin)
 }
 
-#' Supprimer un repertoire
-#'
-#' Supprimer un repertoire.
-#'
-#' @param repertoire Chemin du répertoire à supprimer.
-#'
-#' @examples
-#' # Création du répertoire "test"
-#' divr::creer_repertoire("test")
-#'
-#' # Suppression du répertoire
-#' divr::supprimer_repertoire("test")
-#'
-#' @export
-supprimer_repertoire <- function(repertoire) {
-
-  if (class(repertoire) != "character") {
-    stop("Le paramètre doit être de type character (le nom du répertoire)", call. = FALSE)
-  }
-
-  repertoire <- stringr::str_match(repertoire, "(.+?)(/)?$")[, 2]
-
-  Sys.sleep(0.25)
-  essai_suppression <- unlink(repertoire, recursive = TRUE)
-
-}
-
 #' Extraire des fichiers d'une archive zip
 #'
 #' Extraire des fichiers d'une archive zip.
