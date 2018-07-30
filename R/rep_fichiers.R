@@ -106,21 +106,17 @@ zip_extract_path <- function(path, pattern, pattern_zip = "\\.zip$", n_files = I
   return(zip_files)
 }
 
-#' Concatener des fichiers
+#' Append multiples files into one.
 #'
-#' Concaténer des fichiers.
-#'
-#' @param fichiers_entree Vecteur de fichiers à concaténer.
-#' @param fichier_sortie Chemin du fichier en sortie.
-#'
-#' @examples
+#' @param input_files A vector of files to append.
+#' @param output_file An output file.
 #'
 #' @export
-concatener_fichiers <- function(fichiers_entree, fichier_sortie) {
+files_append <- function(input_files, output_file) {
 
-  fichiers <- lapply(fichiers_entree, readLines)
+  files <- lapply(input_files, readLines)
 
-  fichier_sortie <- file(fichier_sortie, "w")
-  purrr::walk(fichiers, ~ writeLines(., fichier_sortie))
-  close(fichier_sortie)
+  output_file <- file(output_file, "w")
+  purrr::walk(files, ~ writeLines(., output_file))
+  close(output_file)
 }
