@@ -32,33 +32,40 @@ duplicate <- function(data, ...){
   return(duplicate)
 }
 
-#' remplacer_na
+#' Patch a current vector from a target vector.
 #'
-#' @param courant \dots
-#' @param cible \dots
-#' @param remplacement (défaut|na_courant).
+#' @param current A vector to be patched.
+#' @param target A patch vector. If length 1 then recycled to the length of current and only NA are patched.
+#' @param only_na If \code{TRUE} then only missing values in current are patched.
+#'
+#' @return A patched vector.
+#'
+#' @examples
+#' divr::patch_vector(c(1, NA_real_, 3), c(4, 5, 6))
+#' divr::patch_vector(c(1, NA_real_, 3), c(4, 5, 6), only_na = TRUE)
+#' divr::patch_vector(c(1, NA_real_, 3), 4)
 #'
 #' @export
-remplacer_na <- function(courant, cible, remplacement = "défaut"){
+patch_vector <- function(current, target, only_na = FALSE){
 
-  if (length(cible) == 1) {
-    cible <- rep(cible, length(courant))
-    remplacement <- "na_courant"
+  if (length(target) == 1) {
+    target <- rep(target, length(current))
+    only_na <- TRUE
   }
 
-  if (length(courant) != length(cible)) {
-    stop(paste0("Les vecteur courant et cible doivent être de même taille."), call. = FALSE)
-  } else if (class(courant) != class(cible)) {
-    stop(paste0("Les vecteur courant et cible doivent être de même classe"), call. = FALSE)
+  if (length(current) != length(target)) {
+    stop(paste0("current and target vector must have the same length"), call. = FALSE)
+  } else if (class(current) != class(target)) {
+    stop(paste0("current and target vector must have the same class"), call. = FALSE)
   }
 
-  if (remplacement == "défaut") {
-    courant <- ifelse(!is.na(cible), cible, courant)
-  } else if (remplacement == "na_courant") {
-    courant[which(is.na(courant))] <- cible[which(is.na(courant))]
+  if (only_na == FALSE) {
+    current <- ifelse(!is.na(target), target, current)
+  } else if (only_na == TRUE) {
+    current[which(is.na(current))] <- target[which(is.na(current))]
   }
 
-  return(courant)
+  return(current)
 }
 
 #' remplacer_si
@@ -124,7 +131,7 @@ maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
   maj_champ <- table %>%
     dplyr::filter(is.na(!!champ_maj)) %>%
     dplyr::left_join(table_pivot, by = cle_noms) %>%
-    dplyr::mutate(!!nom_champ_maj := divr::remplacer_na(!!champ_maj, .champ_maj, remplacement = "na_courant")) %>%
+    dplyr::mutate(!!nom_champ_maj := divr::patch_vector(!!champ_maj, .champ_maj, remplacement = "na_courant")) %>%
     dplyr::select(-.champ_maj)
 
   ajout <- tidyr::drop_na(table, !!champ_maj)
