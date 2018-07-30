@@ -1,29 +1,17 @@
-#' Initialiser les coeurs pour un traitement parallelise
+#' Initialise cores for a parallel computation.
 #'
-#' Initialiser les coeurs pour un traitement parallélisé.
+#' @param n_cores Number of cores to use (maximum by default).
 #'
-#' @param n_coeurs Nombre de coeurs à utiliser (le maximum par défaut).
-#'
-#' @return Un objet de type cluster.\cr
-#' Après les calculs parallèles, il convient de libérer le cluster avec la commande \code{parallel::stopCluster()} en le passant en paramètre.
-#'
-#' @examples
-#' # Créer le cluster:
-#' cluster <- divr::initialiser_cluster()
-#'
-#' # Un traitement parallélisé
-#'
-#' # A l'issue du traitement parallélisé, libérer les coeurs:
-#' divr::stopCluster(cluster)
+#' @return An objectof type cluster.
 #'
 #' @export
-initialiser_cluster <- function(n_coeurs = NULL){
+initialise_cluster <- function(n_cores = NULL){
 
-  if (is.null(n_coeurs)) {
-    n_coeurs <- parallel::detectCores()
+  if (is.null(n_cores)) {
+    n_cores <- parallel::detectCores()
   }
 
-  cluster <- parallel::makeCluster(n_coeurs)
+  cluster <- parallel::makeCluster(n_cores)
 
   doParallel::registerDoParallel(cluster)
 
@@ -40,12 +28,12 @@ initialiser_cluster <- function(n_coeurs = NULL){
 #'
 #' @examples
 #' #' # Créer le cluster:
-#' cluster <- divr::initialiser_cluster()
+#' cluster <- divr::initialise_cluster()
 #'
 #' # Un traitement parallélisé
 #'
 #' # A l'issue du traitement parallélisé, libérer les coeurs:
-#' divr::stopper_cluster(cluster)
+#' divr::stop_cluster(cluster)
 #'
 stopper_cluster <- function(cluster) {
   parallel::stopCluster(cluster)
