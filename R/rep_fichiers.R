@@ -1,34 +1,3 @@
-#' Vider un repertoire
-#'
-#' Vider un repertoire.
-#'
-#' @param repertoire Chemin du répertoire à vider.
-#'
-#' @examples
-#' # Création du repertoire "test"
-#' divr::creer_repertoire("test")
-#'
-#' # Ecriture d'un fichier à l'intérieur
-#' write.csv(1, "test/test.csv")
-#'
-#' # Vidage du répertoire
-#' divr::vider_repertoire("test")
-#'
-#' @export
-vider_repertoire <- function(repertoire) {
-
-  if (class(repertoire) != "character") {
-    stop("Le paramètre doit être de type character (chemin vers le répertoire)", call. = FALSE)
-  }
-
-  if (dir.exists(repertoire)) {
-    supprimer_repertoire(repertoire)
-  } else message("Le répertoire \"", repertoire, "\" n'existait pas.")
-
-  Sys.sleep(0.25)
-  dir.create(repertoire)
-}
-
 #' Extraire l'extension d'un fichier
 #'
 #' Extraire l'extension d'un fichier.
