@@ -1,22 +1,3 @@
-#' Extraire le chemin a partir du chemin complet
-#'
-#' Extraire le chemin à partir du chemin complet.
-#'
-#' @param chemin_fichier Chemin complet dont le chemin est extrait.
-#'
-#' @return Le chemin.
-#'
-#' @examples
-#' divr::extraire_chemin(c("Test/Dossier/fichier_excel.xlsx", "Test2/Dossier2/fichier_word.docx"))
-#'
-#' @export
-extraire_chemin <- function(chemin_fichier) {
-
-  chemin <- stringr::str_match(chemin_fichier, "(.+)/[^/]+?$")[, 2]
-
-  return(chemin)
-}
-
 #' Extraire des fichiers d'une archive zip
 #'
 #' Extraire des fichiers d'une archive zip.
