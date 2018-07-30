@@ -1,26 +1,3 @@
-#' Extraire l'extension d'un fichier
-#'
-#' Extraire l'extension d'un fichier.
-#'
-#' @param fichier Chemin du fichier dont l'extension est extraite.
-#'
-#' @return L'extension du fichier.
-#'
-#' @examples
-#' divr::extension_fichier(c("fichier_excel.xlsx", "fichier_word.docx"))
-#'
-#' @export
-extension_fichier <- function(fichier) {
-
-  if (class(fichier) != "character") {
-    stop("Le paramètre doit être de type character", call. = FALSE)
-  }
-
-  extension_fichier <- stringr::str_match(fichier, "\\.([^\\.]+)$")[, 2]
-
-  return(extension_fichier)
-}
-
 #' Extraire le fichier a partir du chemin complet
 #'
 #' Extraire le fichier à partir du chemin complet.
@@ -33,7 +10,7 @@ extension_fichier <- function(fichier) {
 #' divr::extraire_nom_fichier(c("Dossier/fichier_excel.xlsx", "Dossier2/fichier_word.docx"))
 #'
 #' @export
-  extraire_nom_fichier <- function(chemin_fichier) {
+extraire_nom_fichier <- function(chemin_fichier) {
 
   nom_fichier <- stringr::str_match(chemin_fichier, "([^\\/]+?)$")[, 2]
 
