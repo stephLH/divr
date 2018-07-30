@@ -41,19 +41,17 @@ construction_package <- function(package, documentation = TRUE) {
 
 }
 
-#' Rechercher une syntaxe de code dans les fichiers R
+#' Look for code inside R or Rmd scripts.
 #'
-#' Rechercher une syntaxe de code dans les fichiers R.
+#' @param code R syntax to search.
+#' @param path Path where R and Rmd files are located.
 #'
-#' @param code Le code R à rechercher.
-#' @param chemin Le chemin contenant les programmes R.
-#'
-#' @return Un tibble à trois champs : le fichier, le numéro de ligne et le code contenant la synatxe recherchée.
+#' @return A data frame with three fields : file, line number and code containing researched syntax.
 #'
 #' @export
-rechercher_code <- function(code, chemin) {
+code_search <- function(code, path = getwd()) {
 
-  fichiers <- list.files(chemin, recursive = TRUE, pattern = "\\.(R|Rmd)$", full.names = TRUE)
+  fichiers <- list.files(path, recursive = TRUE, pattern = "\\.(R|Rmd)$", full.names = TRUE)
 
   rechercher_code <- dplyr::tibble(
     fichier = fichiers,
