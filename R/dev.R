@@ -1,15 +1,13 @@
-#' Obtenir les dependances d'un packages
+#' Get package dependancies.
 #'
-#' Obtenir les dépendances d'un packages.
+#' @param package_path Package path.
 #'
-#' @param repertoire_package Le répertoire racine du package.
-#'
-#' @return Un vecteur de dépendances.
+#' @return A dependencies vector.
 #'
 #' @export
-dependances_package <- function(repertoire_package = getwd()) {
+package_deps <- function(package_path = getwd()) {
 
-  dependances <- list.files(paste0(repertoire_package, "/R"), full.names = TRUE, recursive = TRUE) %>%
+  deps <- list.files(package_path, pattern = "\\.(R|Rmd)$", full.names = TRUE, recursive = TRUE) %>%
     lapply(readr::read_lines) %>%
     unlist() %>%
     stringr::str_match_all("([[:alnum:]\\.]+)::") %>%
@@ -17,7 +15,7 @@ dependances_package <- function(repertoire_package = getwd()) {
     dplyr::pull(V2) %>% unique() %>% sort() %>%
     .[which(is.na(stringr::str_detect(., stringr::str_match(getwd(), .)[, 1])))]
 
-  return(dependances)
+  return(deps)
 }
 
 #' Construire un package
