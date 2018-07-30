@@ -18,27 +18,23 @@ package_deps <- function(package_path = getwd()) {
   return(deps)
 }
 
-#' Construire un package
+#' Build a package.
 #'
-#' Construire un package.
-#'
-#' @param package Le nom du package.
-#' @param documentation Génération de la documentation, \code{TRUE} par défaut.
+#' @param package_path Package path.
+#' @param documentation If \code{TRUE}, documentation is also generated.
 #'
 #' @export
-construction_package <- function(package, documentation = TRUE) {
+package_build <- function(package_path, documentation = TRUE) {
 
   if (documentation == TRUE) {
-    devtools::document(paste0(racine_packages, package), roclets = c('rd', 'collate', 'namespace'))
+    devtools::document(package_path, roclets = c('rd', 'collate', 'namespace'))
   }
 
-  zip <- devtools::build(paste0(racine_packages, package), binary = TRUE, args = "--no-multiarch --with-keep.source")
-  if (file.exists(zip)) {
-    file.remove(zip) %>% invisible()
-  }
+  list.files(R.home(), pattern = "R\\.exe$", recursive = TRUE, full.names = TRUE) %>%
+    head(1) %>%
+    system2(paste0("CMD INSTALL --no-multiarch --with-keep.source \"", package_path, "\""))
 
   .rs.restartR()
-
 }
 
 #' Look for code inside R or Rmd scripts.
