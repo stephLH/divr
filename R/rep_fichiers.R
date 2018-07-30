@@ -1,22 +1,3 @@
-#' Extraire le fichier a partir du chemin complet
-#'
-#' Extraire le fichier à partir du chemin complet.
-#'
-#' @param chemin_fichier Chemin complet dont le fichier est extrait.
-#'
-#' @return Le nom du fichier.
-#'
-#' @examples
-#' divr::extraire_nom_fichier(c("Dossier/fichier_excel.xlsx", "Dossier2/fichier_word.docx"))
-#'
-#' @export
-extraire_nom_fichier <- function(chemin_fichier) {
-
-  nom_fichier <- stringr::str_match(chemin_fichier, "([^\\/]+?)$")[, 2]
-
-  return(nom_fichier)
-}
-
 #' Extraire le chemin a partir du chemin complet
 #'
 #' Extraire le chemin à partir du chemin complet.
