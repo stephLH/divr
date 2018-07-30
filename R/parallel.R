@@ -5,7 +5,7 @@
 #' @return An objectof type cluster.
 #'
 #' @export
-initialise_cluster <- function(n_cores = NULL){
+cl_initialise <- function(n_cores = NULL){
 
   if (is.null(n_cores)) {
     n_cores <- parallel::detectCores()
@@ -23,6 +23,6 @@ initialise_cluster <- function(n_cores = NULL){
 #' @param cluster A cluster object returnes by \code{initialise_cluster}
 #'
 #' @export
-stop_cluster <- function(cluster) {
+cl_stop <- function(cluster) {
   parallel::stopCluster(cluster)
 }
