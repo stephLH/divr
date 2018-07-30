@@ -1,25 +1,3 @@
-#' Creer un repertoire
-#'
-#' Créer un répertoire.
-#'
-#' @param repertoire Chemin du répertoire à créer.
-#'
-#' @examples
-#' # Création du repertoire "test"
-#' divr::creer_repertoire("test")
-#'
-#' @export
-creer_repertoire <- function(repertoire) {
-
-  if (class(repertoire) != "character") {
-    stop("Le paramètre doit être de type character (chemin vers le répertoire)", call. = FALSE)
-  }
-
-  if (!dir.exists(repertoire)) {
-    dir.create(repertoire, recursive = TRUE)
-  }
-}
-
 #' Vider un repertoire
 #'
 #' Vider un repertoire.
@@ -198,7 +176,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
   }
 
   if (paralleliser == TRUE) {
-    clusters <- divr::initialise_cluster()
+    clusters <- divr::cl_initialise()
   } else {
     clusters <- NULL
   }
@@ -243,7 +221,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
     }, cl = clusters)
 
   if (paralleliser == TRUE) {
-    divr::stop_cluster(clusters)
+    divr::cl_stop(clusters)
   }
 
   if (return_tibble == TRUE) {
