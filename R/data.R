@@ -68,43 +68,6 @@ patch_vector <- function(current, target, only_na = FALSE){
   return(current)
 }
 
-#' maj_champ
-#'
-#' @param table \dots
-#' @param table_pivot \dots
-#' @param champ_maj \dots
-#' @param doublons \dots
-#'
-#' @export
-maj_champ <- function(table, table_pivot, champ_maj, ..., doublons = TRUE) {
-
-  cle_noms <- dplyr::quos(...) %>%
-    purrr::map_chr(dplyr::quo_name)
-
-  champ_maj <- dplyr::enquo(champ_maj)
-  nom_champ_maj <- dplyr::quo_name(champ_maj)
-
-  table_pivot <- table_pivot %>%
-    dplyr::select(cle_noms, .champ_maj = !!champ_maj)
-
-  if (doublons == FALSE) {
-    table_pivot <- table_pivot %>%
-      dplyr::anti_join(divr::duplicate(table_pivot, ...), by = cle_noms)
-  }
-
-  maj_champ <- table %>%
-    dplyr::filter(is.na(!!champ_maj)) %>%
-    dplyr::left_join(table_pivot, by = cle_noms) %>%
-    dplyr::mutate(!!nom_champ_maj := divr::patch_vector(!!champ_maj, .champ_maj, remplacement = "na_courant")) %>%
-    dplyr::select(-.champ_maj)
-
-  ajout <- tidyr::drop_na(table, !!champ_maj)
-
-  maj_champ <- dplyr::bind_rows(maj_champ, ajout)
-
-  return(maj_champ)
-}
-
 #' anti_join_bind
 #'
 #' @param x Table pivot
