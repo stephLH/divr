@@ -198,7 +198,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
   }
 
   if (paralleliser == TRUE) {
-    clusters <- divr::initialiser_cluster()
+    clusters <- divr::initialise_cluster()
   } else {
     clusters <- NULL
   }
