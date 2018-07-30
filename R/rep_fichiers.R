@@ -243,7 +243,7 @@ extraire_masse_zip <- function(chemin, regex_fichier, regex_zip = "\\.zip$", n_f
     }, cl = clusters)
 
   if (paralleliser == TRUE) {
-    divr::stopper_cluster(clusters)
+    divr::stop_cluster(clusters)
   }
 
   if (return_tibble == TRUE) {
