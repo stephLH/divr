@@ -68,12 +68,15 @@ patch_vector <- function(current, target, only_na = FALSE){
   return(current)
 }
 
-#' anti_join_bind
+#' anti_join and bind_rows functions executed successively.
 #'
-#' @param x Table pivot
-#' @param y Table tierce
-#' @param by \dots
-#' @param arrange \dots
+#' The rows from x + the rows from y that are not in x.
+#'
+#' @param x,y data frames to join.
+#' @param by a character vector of variables to join by.
+#' @param arrange if \code{TRUE}, arrange rows with the \code{by} variables.
+#'
+#' @return A data frame.
 #'
 #' @export
 anti_join_bind <- function(x, y, by, arrange = TRUE) {

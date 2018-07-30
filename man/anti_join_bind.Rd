@@ -2,19 +2,20 @@
 % Please edit documentation in R/data.R
 \name{anti_join_bind}
 \alias{anti_join_bind}
-\title{anti_join_bind}
+\title{anti_join and bind_rows functions executed successively.}
 \usage{
 anti_join_bind(x, y, by, arrange = TRUE)
 }
 \arguments{
-\item{x}{Table pivot}
+\item{x, y}{data frames to join.}
 
-\item{y}{Table tierce}
+\item{by}{a character vector of variables to join by.}
 
-\item{by}{\dots}
-
-\item{arrange}{\dots}
+\item{arrange}{if \code{TRUE}, arrange rows with the \code{by} variables.}
+}
+\value{
+A data frame.
 }
 \description{
-anti_join_bind
+The rows from x + the rows from y that are not in x.
 }
