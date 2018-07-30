@@ -1,42 +1,43 @@
-#' count_agregats
+#' Count aggregates (extended version of dplyr::count).
 #'
-#' @param table \dots
-#' @param ... \dots
-#' @param valeur_total \dots
+#' @param data A data frame.
+#' @param ... Variables to group by.
+#' @param total_value The total value label.
 #'
-#' @return
+#' @return A tbl, grouped the same way as data.
 #'
 #' @examples
-#' dplyr::tibble(var1 = c(1, 1, 2, 2) %>% as.character(), var2 = c(1, 2, 1, 2) %>% as.character(), var3 = c(1, 2, 2, 2) %>% as.character())
+#' data <- dplyr::tibble(var1 = c(1, 1, 2, 2) %>% as.character(), var2 = c(1, 2, 1, 2) %>% as.character(), var3 = c(1, 2, 2, 2) %>% as.character())
+#' divr::count_agg(data, var1, var2)
 #'
 #' @export
-count_agregats <- function(table, ..., valeur_total = "Total") {
+count_agg <- function(data, ..., total_value = "Total") {
 
-  champs <- dplyr::quos(...)
-  noms_champs_count <- purrr::map_chr(dplyr::enquo(champs)[[2]], dplyr::quo_name)
-  noms_champs_cle <- names(table)[!names(table) %in% noms_champs_count]
+  fields <- dplyr::quos(...)
+  fields_count_name <- purrr::map_chr(dplyr::enquo(fields)[[2]], dplyr::quo_name)
+  fields_not_count_name <- names(data)[!names(data) %in% fields_count_name]
 
-  count_agregat <- function(table, champ, valeur_total) {
+  count_agregat <- function(data, champ, total_value) {
 
-    champs_count <- noms_champs_count[-c(which(noms_champs_count == champ):length(noms_champs_count))]
+    fields_count <- fields_count_name[-c(which(fields_count_name == champ):length(fields_count_name))]
 
-    champs_mutate <- noms_champs_count[c(which(noms_champs_count == champ):length(noms_champs_count))]
-    mutate <- stats::setNames(as.list(rep(NA_character_, length(champs_mutate))),
-                              as.list(champs_mutate))
+    fields_mutate <- fields_count_name[c(which(fields_count_name == champ):length(fields_count_name))]
+    mutate <- stats::setNames(as.list(rep(NA_character_, length(fields_mutate))),
+                              as.list(fields_mutate))
 
-    count_agregat <- table %>%
+    count_agregat <- data %>%
       dplyr::filter(!!!rlang::parse_quosure(paste0("!is.na(", champ,")"))) %>%
-      dplyr::count(!!!lapply(c(noms_champs_cle, champs_count), rlang::parse_quosure)) %>%
+      dplyr::count(!!!lapply(c(fields_not_count_name, fields_count), rlang::parse_quosure)) %>%
       dplyr::mutate(!!!mutate) %>%
-      dplyr::mutate(!!champ := valeur_total)
+      dplyr::mutate(!!champ := total_value)
 
     return(count_agregat)
   }
 
-  count_agregats <- table %>%
-    dplyr::count(!!!lapply(c(noms_champs_cle, noms_champs_count), rlang::parse_quosure)) %>%
+  count_agregats <- data %>%
+    dplyr::count(!!!lapply(c(fields_not_count_name, fields_count_name), rlang::parse_quosure)) %>%
     dplyr::bind_rows(
-      purrr::map_df(noms_champs_count, ~ count_agregat(table, ., valeur_total = valeur_total))
+      purrr::map_df(fields_count_name, ~ count_agregat(data, ., total_value = total_value))
     )
 
   return(count_agregats)
