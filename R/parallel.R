@@ -18,23 +18,11 @@ initialise_cluster <- function(n_cores = NULL){
   return(cluster)
 }
 
-#' Stopper un cluster (traitement parallelise)
+#' Stop a cluster after a parallel computation.
 #'
-#' Stopper un cluster (traitement parallélisé)
-#'
-#' @param cluster
+#' @param cluster A cluster object returnes by \code{initialise_cluster}
 #'
 #' @export
-#'
-#' @examples
-#' #' # Créer le cluster:
-#' cluster <- divr::initialise_cluster()
-#'
-#' # Un traitement parallélisé
-#'
-#' # A l'issue du traitement parallélisé, libérer les coeurs:
-#' divr::stop_cluster(cluster)
-#'
-stopper_cluster <- function(cluster) {
+stop_cluster <- function(cluster) {
   parallel::stopCluster(cluster)
 }
