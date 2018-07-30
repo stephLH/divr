@@ -2,8 +2,8 @@
 
 export("%>%")
 export(anti_join_bind)
+export(code_find)
 export(code_replace)
-export(code_search)
 export(concatener_fichiers)
 export(construction_package)
 export(count_agregats)

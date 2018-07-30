@@ -49,11 +49,11 @@ construction_package <- function(package, documentation = TRUE) {
 #' @return A data frame with three fields : file, line number and code containing researched syntax.
 #'
 #' @export
-code_search <- function(code, path = getwd()) {
+code_find <- function(code, path = getwd()) {
 
   fichiers <- list.files(path, recursive = TRUE, pattern = "\\.(R|Rmd)$", full.names = TRUE)
 
-  rechercher_code <- dplyr::tibble(
+  code_find <- dplyr::tibble(
     fichier = fichiers,
     code = purrr::map(fichiers, readr::read_table, col_names = "code", col_types = "c")
   ) %>%
@@ -65,7 +65,7 @@ code_search <- function(code, path = getwd()) {
     tidyr::drop_na(code) %>%
     dplyr::filter(stringr::str_detect(code, !!code))
 
-  return(rechercher_code)
+  return(code_find)
 }
 
 #' Look and replace code inside R or Rmd scripts.
@@ -77,7 +77,7 @@ code_search <- function(code, path = getwd()) {
 #' @export
 code_replace <- function(code, replacement, path) {
 
-  fichiers <- divr::code_search(code, path) %>%
+  fichiers <- divr::code_find(code, path) %>%
     dplyr::pull(fichier) %>%
     unique()
 
