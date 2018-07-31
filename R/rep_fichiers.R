@@ -8,10 +8,10 @@
 #' @param remove_zip If \code{TRUE}, the zip file is removed.
 #'
 #' @examples
-#' divr::zip_extract_file("archive.zip", pattern = "pdf$", exdir = "test_zip")
+#' divr::zip_extract("archive.zip", pattern = "pdf$", exdir = "test_zip")
 #'
 #' @export
-zip_extract_file <- function(zip_file, pattern = NULL, exdir = NULL, remove_zip = FALSE) {
+zip_extract <- function(zip_file, pattern = NULL, exdir = NULL, remove_zip = FALSE) {
 
   if (!file.exists(zip_file)) {
     stop("The zip file \"", zip_file,"\" does not exist", call. = FALSE)
@@ -91,7 +91,7 @@ zip_extract_path <- function(path, pattern, pattern_zip = "\\.zip$", n_files = I
     split(1:nrow(.)) %>%
     pbapply::pblapply(function(ligne) {
 
-      divr::zip_extract_file(ligne$zip_file, pattern = pattern)
+      divr::zip_extract(ligne$zip_file, pattern = pattern)
 
     }, cl = clusters)
 
