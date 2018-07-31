@@ -9,15 +9,8 @@ License: Etalab
 Encoding: UTF-8
 LazyData: true
 Imports:
-    devtools,
-    doParallel,
-  	dplyr,
-  	lubridate,
-  	parallel,
-    pbapply,
-    purrr,
-    readr,
+    dplyr,
+  	purrr,
     rlang,
-    stringr,
     stats
 RoxygenNote: 6.1.0
