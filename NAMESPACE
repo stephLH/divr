@@ -2,8 +2,6 @@
 
 export("%>%")
 export(anti_join_bind)
-export(cl_initialise)
-export(cl_stop)
 export(code_find)
 export(code_replace)
 export(count_agg)
