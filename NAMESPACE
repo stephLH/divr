@@ -2,12 +2,8 @@
 
 export("%>%")
 export(anti_join_bind)
-export(code_find)
-export(code_replace)
 export(count_agg)
 export(duplicate)
 export(files_append)
-export(package_build)
-export(package_deps)
 export(patch_vector)
 importFrom(dplyr,"%>%")
