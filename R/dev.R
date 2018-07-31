@@ -30,9 +30,7 @@ package_build <- function(package_path, documentation = TRUE) {
     devtools::document(package_path, roclets = c('rd', 'collate', 'namespace'))
   }
 
-  list.files(R.home(), pattern = "R\\.exe$", recursive = TRUE, full.names = TRUE) %>%
-    head(1) %>%
-    system2(paste0("CMD INSTALL --no-multiarch --with-keep.source \"", package_path, "\""))
+  devtools::RCMD("INSTALL", paste0("--no-multiarch --with-keep.source \"", package_path, "\""))
 
   .rs.restartR()
 }
