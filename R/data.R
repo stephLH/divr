@@ -68,7 +68,7 @@ patch_vector <- function(current, target, only_na = FALSE){
   return(current)
 }
 
-#' anti_join and bind_rows functions executed successively.
+#' Functions anti_join and bind_rows executed successively.
 #'
 #' The rows from x + the rows from y that are not in x.
 #'
