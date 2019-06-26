@@ -14,7 +14,7 @@
 count_agg <- function(data, ..., total_value = "Total") {
 
   fields <- dplyr::quos(...)
-  fields_count_name <- purrr::map_chr(dplyr::enquo(fields)[[2]], dplyr::quo_name)
+  fields_count_name <- purrr::map_chr(fields, rlang::as_name)
   fields_not_count_name <- names(data)[!names(data) %in% fields_count_name]
 
   count_agregat <- function(data, champ, total_value) {
@@ -26,8 +26,8 @@ count_agg <- function(data, ..., total_value = "Total") {
                               as.list(fields_mutate))
 
     count_agregat <- data %>%
-      dplyr::filter(!!!rlang::parse_quosure(paste0("!is.na(", champ,")"))) %>%
-      dplyr::count(!!!lapply(c(fields_not_count_name, fields_count), rlang::parse_quosure)) %>%
+      dplyr::filter(!!rlang::parse_quo(glue::glue("!is.na({champ})"), env = rlang::caller_env())) %>%
+      dplyr::count(!!!lapply(c(fields_not_count_name, fields_count), rlang::parse_quo, env = rlang::caller_env())) %>%
       dplyr::mutate(!!!mutate) %>%
       dplyr::mutate(!!champ := total_value)
 
@@ -35,7 +35,7 @@ count_agg <- function(data, ..., total_value = "Total") {
   }
 
   count_agregats <- data %>%
-    dplyr::count(!!!lapply(c(fields_not_count_name, fields_count_name), rlang::parse_quosure)) %>%
+    dplyr::count(!!!lapply(c(fields_not_count_name, fields_count_name), rlang::parse_quo, env = rlang::caller_env())) %>%
     dplyr::bind_rows(
       purrr::map_df(fields_count_name, ~ count_agregat(data, ., total_value = total_value))
     )
