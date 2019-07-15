@@ -20,7 +20,11 @@ A tbl, grouped the same way as data.
 Count aggregates (extended version of dplyr::count).
 }
 \examples{
-data <- dplyr::tibble(var1 = c(1, 1, 2, 2) \%>\% as.character(), var2 = c(1, 2, 1, 2) \%>\% as.character(), var3 = c(1, 2, 2, 2) \%>\% as.character())
+data <- dplyr::tibble(
+  var1 = as.character(c(1, 1, 2, 2)),
+  var2 = as.character(c(1, 2, 1, 2)),
+  var3 = as.character(c(1, 2, 2, 2))
+)
 divr::count_agg(data, var1, var2)
 
 }
