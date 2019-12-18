@@ -12,7 +12,6 @@ RoxygenNote: 7.0.2
 Imports:
     dplyr,
     glue,
-    pagedown,
     purrr,
     rlang,
     stats
